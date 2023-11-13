@@ -12,15 +12,12 @@ function LoginUI() {
   const [userTelephone, setUserTelephone] = useState("");
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
-  // Pending enable Submit Btn
-  const enableSubmitBtn = () => {
-    const isUsernameValid = username.length >= 5;
-    const isPasswordValid =
-      userPassword.length >= 8 &&
-      hasCapitalLetter(userPassword) &&
-      /\d/.test(userPassword) &&
-      /[!@#$%^&*]/.test(userPassword);
-    setIsSubmitEnabled(isUsernameValid && isPasswordValid);
+  //TODO: validate username that is long enough
+  const userNameLength = (event) => {
+    setUsername((username) => event.target.value);
+    if (event.target.value < 5) {
+      setUsernameError((usernameError) => "Min 5 Characters");
+    }
   };
 
   const hasCapitalLetter = (event) => {
@@ -31,9 +28,11 @@ function LoginUI() {
         false
       );
   };
+
   // TODO: validate form with password with 4 bullets points.
   const changePassword = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
+    console.log(event.target.value.length);
     setUserPassword((_userPassword) => event.target.value);
     if (event.target.value.length < 8) {
       setUserPasswordError((_userPasswordError) => "Min 8 characters");
@@ -47,16 +46,21 @@ function LoginUI() {
     if (!/[!@#$%^&*]/.test(event.target.value)) {
       setUserPasswordError((_userPasswordError) => "Min a special character");
     }
-    enableSubmitBtn();
+    enableSubmitBtn(event.target.value);
   };
 
-  //TODO: validate username that is long enough
-  const userNameLength = (event) => {
-    setUsername((username) => event.target.value);
-    if (event.target.value < 5) {
-      setUsernameError((usernameError) => "Min 5 Characters");
-    }
+  // Pending enable Submit Btn
+  const enableSubmitBtn = (password) => {
+    const isUsernameValid = username.length >= 5;
+    const isPasswordValid =
+      password.length >= 8 &&
+      hasCapitalLetter(password) &&
+      /\d/.test(password) &&
+      /[!@#$%^&*]/.test(password);
+    console.log(isUsernameValid, isPasswordValid);
+    setIsSubmitEnabled(isUsernameValid && isPasswordValid);
   };
+
   return (
     <>
       <div>

@@ -46,10 +46,6 @@ export default function FormUI() {
       </p>
       <hr />
       <LoginUI />
-      {/* <button type="reset">Reset form</button>
-      <button disabled={!isSubmitEnabled} type="submit">
-        Submit form
-      </button> */}
     </form>
   );
 }
