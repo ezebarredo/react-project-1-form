@@ -5,23 +5,23 @@ import { useState } from "react";
 // New component
 function LoginUI() {
   const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
+  const [_usernameError, setUsernameError] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userPasswordError, setUserPasswordError] = useState("");
+  const [_userPasswordError, setUserPasswordError] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userTelephone, setUserTelephone] = useState("");
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
   //TODO: validate username that is long enough
-  const userNameLength = (event) => {
-    setUsername((username) => event.target.value);
+  const userNameLength = (event: React.FormEvent<HTMLInputElement>): void => {
+    setUsername((_username) => event.target.value);
     if (event.target.value < 5) {
-      setUsernameError((usernameError) => "Min 5 Characters");
+      setUsernameError((_usernameError) => "Min 5 Characters");
     }
   };
 
-  const hasCapitalLetter = (event) => {
-    return event
+  const hasCapitalLetter = (string: string) => {
+    return string
       .split("")
       .reduce(
         (foundCapital, char) => foundCapital || char !== char.toLowerCase(),
@@ -30,7 +30,7 @@ function LoginUI() {
   };
 
   // TODO: validate form with password with 4 bullets points.
-  const changePassword = (event) => {
+  const changePassword = (event: Event) => {
     // console.log(event.target.value);
     console.log(event.target.value.length);
     setUserPassword((_userPassword) => event.target.value);
@@ -50,7 +50,7 @@ function LoginUI() {
   };
 
   // Pending enable Submit Btn
-  const enableSubmitBtn = (password) => {
+  const enableSubmitBtn = (password: string) => {
     const isUsernameValid = username.length >= 5;
     const isPasswordValid =
       password.length >= 8 &&
@@ -138,3 +138,16 @@ function LoginUI() {
 }
 
 export default LoginUI;
+function FormEvent<T>(
+  event: Event | undefined,
+  Event: {
+    new (type: string, eventInitDict?: EventInit | undefined): Event;
+    prototype: Event;
+    readonly NONE: 0;
+    readonly CAPTURING_PHASE: 1;
+    readonly AT_TARGET: 2;
+    readonly BUBBLING_PHASE: 3;
+  }
+) {
+  throw new Error("Function not implemented.");
+}
