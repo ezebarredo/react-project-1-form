@@ -31,9 +31,8 @@ function LoginUI() {
   };
 
   // TODO: validate form with password with 4 bullets points.
-  const changePassword = (event: Event) => {
-    // console.log(event.target.value);
-    // console.log((event.target as HTMLInputElement).value.length);
+  const changePassword = (event: React.FormEvent<HTMLInputElement>): void => {
+    // console.log((event.target as HTMLInputElement).value);
     if (event) {
       //TODO: try to solve event error
       // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
@@ -56,7 +55,7 @@ function LoginUI() {
     enableSubmitBtn((event.target as HTMLInputElement).value);
   };
 
-  // Pending enable Submit Btn
+  // Pending enable Submit Btn. --> DONE
   const enableSubmitBtn = (password: string) => {
     const isUsernameValid = username.length >= 5;
     const isPasswordValid =
@@ -64,7 +63,7 @@ function LoginUI() {
       hasCapitalLetter(password) &&
       /\d/.test(password) &&
       /[!@#$%^&*]/.test(password);
-    console.log(isUsernameValid, isPasswordValid);
+    // console.log(isUsernameValid, isPasswordValid);
     setIsSubmitEnabled(isUsernameValid && isPasswordValid);
   };
 
@@ -89,7 +88,7 @@ function LoginUI() {
         <p>Password</p>
         <label>
           {/* Another fix */}
-          <input type="password" onInput={() => changePassword} required />
+          <input type="password" onInput={changePassword} required />
           {/* create 1 ul 4 li for password validation: length, capital letter, number, special character */}
           <ul>
             {/* conditional rendering */}
@@ -139,7 +138,7 @@ function LoginUI() {
         </label>
         <label>
           <button type="reset">Reset form</button>
-          {/*  TODO: Disable submit button if form is not validated. (Extra, ok if not do) */}
+          {/*  TODO: Disable submit button if form is not validated. "DONE" */}
           <button disabled={!isSubmitEnabled} type="submit">
             Submit form
           </button>
@@ -150,16 +149,3 @@ function LoginUI() {
 }
 
 export default LoginUI;
-// function FormEvent<T>(
-//   event: Event | undefined,
-//   Event: {
-//     new (type: string, eventInitDict?: EventInit | undefined): Event;
-//     prototype: Event;
-//     readonly NONE: 0;
-//     readonly CAPTURING_PHASE: 1;
-//     readonly AT_TARGET: 2;
-//     readonly BUBBLING_PHASE: 3;
-//   }
-// ) {
-//   throw new Error("Function not implemented.");
-// }
