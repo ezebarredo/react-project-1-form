@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // TODO: Take form with all validation put in new component and add to submit. On submit can use handle submit.
 
+// TODO: check useState are not used.
 // New component
 function LoginUI() {
   const [username, setUsername] = useState("");
@@ -14,8 +15,8 @@ function LoginUI() {
 
   //TODO: validate username that is long enough
   const userNameLength = (event: React.FormEvent<HTMLInputElement>): void => {
-    setUsername((_username) => event.target.value);
-    if (event.target.value < 5) {
+    setUsername((_username) => (event.target as HTMLInputElement).value);
+    if ((event.target as HTMLInputElement).value.length < 5) {
       setUsernameError((_usernameError) => "Min 5 Characters");
     }
   };
@@ -32,21 +33,27 @@ function LoginUI() {
   // TODO: validate form with password with 4 bullets points.
   const changePassword = (event: Event) => {
     // console.log(event.target.value);
-    console.log(event.target.value.length);
-    setUserPassword((_userPassword) => event.target.value);
-    if (event.target.value.length < 8) {
-      setUserPasswordError((_userPasswordError) => "Min 8 characters");
+    // console.log((event.target as HTMLInputElement).value.length);
+    if (event) {
+      //TODO: try to solve event error
+      // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
+      setUserPassword(
+        (_userPassword) => (event.target as HTMLInputElement).value
+      );
+      if ((event.target as HTMLInputElement).value.length < 8) {
+        setUserPasswordError((_userPasswordError) => "Min 8 characters");
+      }
+      if (!hasCapitalLetter((event.target as HTMLInputElement).value)) {
+        setUserPasswordError((_userPasswordError) => "1 Capital letter");
+      }
+      if (!/\d/.test((event.target as HTMLInputElement).value)) {
+        setUserPasswordError((_userPasswordError) => "Min a number");
+      }
+      if (!/[!@#$%^&*]/.test((event.target as HTMLInputElement).value)) {
+        setUserPasswordError((_userPasswordError) => "Min a special character");
+      }
     }
-    if (!hasCapitalLetter(event.target.value)) {
-      setUserPasswordError((_userPasswordError) => "1 Capital letter");
-    }
-    if (!/\d/.test(event.target.value)) {
-      setUserPasswordError((_userPasswordError) => "Min a number");
-    }
-    if (!/[!@#$%^&*]/.test(event.target.value)) {
-      setUserPasswordError((_userPasswordError) => "Min a special character");
-    }
-    enableSubmitBtn(event.target.value);
+    enableSubmitBtn((event.target as HTMLInputElement).value);
   };
 
   // Pending enable Submit Btn
@@ -81,7 +88,8 @@ function LoginUI() {
         </label>
         <p>Password</p>
         <label>
-          <input type="password" onInput={changePassword} required />
+          {/* Another fix */}
+          <input type="password" onInput={() => changePassword} required />
           {/* create 1 ul 4 li for password validation: length, capital letter, number, special character */}
           <ul>
             {/* conditional rendering */}
@@ -110,7 +118,9 @@ function LoginUI() {
           <input
             type="email"
             onInput={(event) =>
-              setUserEmail((_userEmail) => event.target.value)
+              setUserEmail(
+                (_userEmail) => (event.target as HTMLInputElement).value
+              )
             }
             required
           />
@@ -121,7 +131,9 @@ function LoginUI() {
           <input
             type="tel"
             onInput={(event) =>
-              setUserTelephone((_userTelephone) => event.target.value)
+              setUserTelephone(
+                (_userTelephone) => (event.target as HTMLInputElement).value
+              )
             }
           />
         </label>
@@ -138,16 +150,16 @@ function LoginUI() {
 }
 
 export default LoginUI;
-function FormEvent<T>(
-  event: Event | undefined,
-  Event: {
-    new (type: string, eventInitDict?: EventInit | undefined): Event;
-    prototype: Event;
-    readonly NONE: 0;
-    readonly CAPTURING_PHASE: 1;
-    readonly AT_TARGET: 2;
-    readonly BUBBLING_PHASE: 3;
-  }
-) {
-  throw new Error("Function not implemented.");
-}
+// function FormEvent<T>(
+//   event: Event | undefined,
+//   Event: {
+//     new (type: string, eventInitDict?: EventInit | undefined): Event;
+//     prototype: Event;
+//     readonly NONE: 0;
+//     readonly CAPTURING_PHASE: 1;
+//     readonly AT_TARGET: 2;
+//     readonly BUBBLING_PHASE: 3;
+//   }
+// ) {
+//   throw new Error("Function not implemented.");
+// }

@@ -7,12 +7,12 @@ export default function FormUI() {
 
     // Read the form data
     //TODO: check later
-    const form = e.target!;
-    const formData = new FormData(form);
+    const form = e.target;
+    const formData = new FormData(form as HTMLFormElement);
     console.log(formData);
   }
   return (
-    <form method="post" onSubmit={handleSubmit}>
+    <form method="post" onSubmit={() => handleSubmit}>
       <label>
         Text input: <input name="myInput" defaultValue="TEST..." />
       </label>
