@@ -2,23 +2,23 @@ import { useState } from "react";
 
 // TODO: Take form with all validation put in new component and add to submit. On submit can use handle submit.
 
-// TODO: check useState are not used.
+// TODO: check useState are not used. (Pending)
 // New component
 function LoginUI() {
   const [username, setUsername] = useState("");
-  const [_usernameError, setUsernameError] = useState("");
+  // const [_usernameError, setUsernameError] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [_userPasswordError, setUserPasswordError] = useState("");
+  // const [_userPasswordError, setUserPasswordError] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userTelephone, setUserTelephone] = useState("");
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
 
-  //TODO: validate username that is long enough
+  //TODO: validate username that is long enough -> DONE
   const userNameLength = (event: React.FormEvent<HTMLInputElement>): void => {
     setUsername((_username) => (event.target as HTMLInputElement).value);
-    if ((event.target as HTMLInputElement).value.length < 5) {
-      setUsernameError((_usernameError) => "Min 5 Characters");
-    }
+    // if ((event.target as HTMLInputElement).value.length < 5) {
+    //   // setUsernameError((_usernameError) => "Min 5 Characters");
+    // }
   };
 
   const hasCapitalLetter = (string: string) => {
@@ -34,23 +34,23 @@ function LoginUI() {
   const changePassword = (event: React.FormEvent<HTMLInputElement>): void => {
     // console.log((event.target as HTMLInputElement).value);
     if (event) {
-      //TODO: try to solve event error
+      //TODO: try to solve event error -> DONE
       // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
       setUserPassword(
         (_userPassword) => (event.target as HTMLInputElement).value
       );
-      if ((event.target as HTMLInputElement).value.length < 8) {
-        setUserPasswordError((_userPasswordError) => "Min 8 characters");
-      }
-      if (!hasCapitalLetter((event.target as HTMLInputElement).value)) {
-        setUserPasswordError((_userPasswordError) => "1 Capital letter");
-      }
-      if (!/\d/.test((event.target as HTMLInputElement).value)) {
-        setUserPasswordError((_userPasswordError) => "Min a number");
-      }
-      if (!/[!@#$%^&*]/.test((event.target as HTMLInputElement).value)) {
-        setUserPasswordError((_userPasswordError) => "Min a special character");
-      }
+      // if ((event.target as HTMLInputElement).value.length < 8) {
+      //   setUserPasswordError((_userPasswordError) => "Min 8 characters");
+      // }
+      // if (!hasCapitalLetter((event.target as HTMLInputElement).value)) {
+      //   setUserPasswordError((_userPasswordError) => "1 Capital letter");
+      // }
+      // if (!/\d/.test((event.target as HTMLInputElement).value)) {
+      //   setUserPasswordError((_userPasswordError) => "Min a number");
+      // }
+      // if (!/[!@#$%^&*]/.test((event.target as HTMLInputElement).value)) {
+      //   setUserPasswordError((_userPasswordError) => "Min a special character");
+      // }
     }
     enableSubmitBtn((event.target as HTMLInputElement).value);
   };
@@ -63,7 +63,6 @@ function LoginUI() {
       hasCapitalLetter(password) &&
       /\d/.test(password) &&
       /[!@#$%^&*]/.test(password);
-    // console.log(isUsernameValid, isPasswordValid);
     setIsSubmitEnabled(isUsernameValid && isPasswordValid);
   };
 

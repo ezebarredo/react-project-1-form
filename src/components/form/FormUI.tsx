@@ -1,4 +1,4 @@
-import LoginUI from "./LoginUI";
+import LoginUIZustand from "./LoginUIZustand";
 
 export default function FormUI() {
   function handleSubmit(e: Event) {
@@ -41,7 +41,8 @@ export default function FormUI() {
         </label>
       </p>
       <hr />
-      <LoginUI />
+      {/* <LoginUI /> */}
+      <LoginUIZustand />
     </form>
   );
 }
